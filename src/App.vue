@@ -4,7 +4,7 @@
   <UserForm/>
 
   <nav>
-    <router-link to="/">Snacks</router-link> |
+    <router-link to="/">Snacks</router-link>
     <router-link to="/saved">Saved</router-link>
   </nav>
   <router-view/>
@@ -43,7 +43,7 @@
 }
 
 /* Shared styles */
-body, option, button{
+body, option, button, select{
   font-family: 'milky-nice', sans-serif;
 }
 /* End of shared styles */
@@ -64,7 +64,10 @@ h1{
   font-family: 'halo-dek', sans-serif;
   text-align: center;
   font-size: 3rem;
-  margin: 1rem 0;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  color: var(--fourth);
+  text-shadow: 5px 5px var(--third);
 }
 
 nav {

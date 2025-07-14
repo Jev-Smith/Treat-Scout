@@ -7,8 +7,10 @@
             </option>
         </select>
 
-        <p>{{ location }}</p>
-        <button type="submit">Search</button>
+        <button type="submit">
+            <span aria-hidden="true" class="material-symbols-outlined">search</span>
+            <span id="search-text">Search</span>
+        </button>
     </form>
 </template>
 
@@ -54,7 +56,6 @@ export default {
     /* Shared styles */
     button, select{
         width: 100%;
-        height: 30px;
     }
 
     select, label{
@@ -62,9 +63,35 @@ export default {
     }
     /* End of shared styles */
 
+    select{
+        height: 30px;
+    }
+
+    button{
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        align-items: center;
+        height: 50px;
+        font-size: 1.125rem;
+    }
+
     button:hover{
         background: var(--third);
-        color: white;
+        color: var(--fourth);
+        border: 1px solid var(--fourth);
+    }
+
+    #search-text{
+        margin-left: 5px;
+    }
+
+    .material-symbols-outlined {
+        font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
     }
 
 </style>
