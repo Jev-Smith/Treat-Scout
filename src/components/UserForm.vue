@@ -45,11 +45,26 @@ export default {
             }
         }
 
-        getLocations();
+        // getLocations();
     }
 }
 </script>
 
 <style>
+    /* Shared styles */
+    button, select{
+        width: 100%;
+        height: 30px;
+    }
+
+    select, label{
+        margin-bottom: .5rem;
+    }
+    /* End of shared styles */
+
+    button:hover{
+        background: var(--third);
+        color: white;
+    }
 
 </style>

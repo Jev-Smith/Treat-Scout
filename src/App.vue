@@ -25,8 +25,46 @@
   box-sizing: border-box;
 }
 
-#app {
+:root{
+  --primary: #FCA3CC;
+  --secondary: #BCE6EB;
+  --third: #BA90C6;
+  --fourth: #FDF4F5;
+}
 
+@font-face {
+  font-family: 'halo-dek';
+  src: url(../fonts/halo_dek/Halo\ Dek.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'milky-nice';
+  src: url(../fonts/milky_nice/MilkyNice.ttf) format('truetype');
+}
+
+/* Shared styles */
+body, option, button{
+  font-family: 'milky-nice', sans-serif;
+}
+/* End of shared styles */
+
+body{
+  background: linear-gradient(var(--primary), var(--secondary));
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+#app{
+  max-width: 900px;
+  width: 95%;
+  margin: 0 auto;
+}
+
+h1{
+  font-family: 'halo-dek', sans-serif;
+  text-align: center;
+  font-size: 3rem;
+  margin: 1rem 0;
 }
 
 nav {
