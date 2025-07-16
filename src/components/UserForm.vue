@@ -47,7 +47,7 @@ export default {
             }
         }
 
-        // getLocations();
+        getLocations();
     }
 }
 </script>
@@ -56,6 +56,8 @@ export default {
     /* Shared styles */
     button, select{
         width: 100%;
+        border: 1px solid #000;
+        border-radius: 5px;
     }
 
     select, label{
@@ -67,12 +69,16 @@ export default {
         height: 30px;
     }
 
+    option:checked{
+        color: var(--active);
+    }
+
     button{
         display: flex;
         justify-content: center;
         align-content: center;
         align-items: center;
-        height: 50px;
+        height: var(--height-50);
         font-size: 1.125rem;
     }
 
@@ -93,5 +99,4 @@ export default {
         'GRAD' 0,
         'opsz' 24
     }
-
 </style>
