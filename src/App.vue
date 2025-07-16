@@ -1,6 +1,10 @@
 <template>
+  <header>
+  <Compass :size="50" aria-hidden="true" id="compass"/>
   <h1>Treat Scout</h1>
-
+  </header>
+  
+  <p>Note: Results are user generated, so there may be inaccuracies.</p>
   <UserForm/>
 
   <nav>
@@ -19,10 +23,10 @@
 
 <script>
   import UserForm from './components/UserForm';
-  import { IceCreamCone, Heart } from 'lucide-vue-next';
+  import { IceCreamCone, Heart, Compass } from 'lucide-vue-next';
 
   export default{
-    components: {UserForm, IceCreamCone, Heart}
+    components: {UserForm, IceCreamCone, Heart, Compass}
   }
 </script>
 
@@ -53,9 +57,25 @@
     --height-50: 50px;
   }
 
+  header{
+    justify-content: center;
+    margin-top: 1rem;
+  }
+
+  #compass{
+    position: relative;
+    left: 10px;
+    z-index: -1;
+    color: var(--third);
+  }
+
   /* Shared styles */
-  nav, .nav-link{  
+  nav, .nav-link, header{  
     display: flex;
+  }
+
+  header, p{
+    margin-bottom: 2rem;
   }
   /* End of shared styles */
 
@@ -73,10 +93,7 @@
 
   h1{
     font-family: 'halo-dek', sans-serif;
-    text-align: center;
     font-size: 3rem;
-    margin-top: 1rem;
-    margin-bottom: 2rem;
     color: var(--fourth);
     text-shadow: 5px 5px var(--third);
   }
