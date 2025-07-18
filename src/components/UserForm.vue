@@ -1,6 +1,6 @@
 <template>
     <form @submit.prevent="handleForm">
-        <label for="location">Choose a location:</label>
+        <label for="locations">Choose a location:</label>
         <select v-model="location" id="locations">
             <option :value="loc" v-for="loc in locationList" :key="loc.index">
                 {{ loc }}
@@ -19,7 +19,34 @@ export default {
     data(){
         return {
             location: '',
-            locationList: null
+            locationList: null, 
+            searchParams: 'categories_tags_en=snacks&fields=brands_tags,product_name,selected_images&page=1&page_size=24',
+        }
+    },
+    methods:{
+        async handleForm(){
+            if(!this.location){
+                return;
+            }
+
+            const params = new URLSearchParams();
+            params.append("countries_tags_en", this.location);
+
+            try {
+                const url = `https://world.openfoodfacts.net/api/v2/search?${this.searchParams}&${params}`;
+
+                const res = await fetch(`${url}`, {method:'GET',  
+                                    headers: {'Authorization': 'Basic ' + btoa('off:off')}});
+
+                if(!res.ok){
+                    throw new Error('Could not fetch results');
+                }
+
+                const json = await res.json();
+                this.$emit('send-results', json);
+            } catch (err) {
+                console.error(err.message);
+            }
         }
     },
     mounted(){
@@ -67,6 +94,7 @@ export default {
 
     select{
         height: 30px;
+        padding-left: 4px;
     }
 
     option:checked{
@@ -80,6 +108,7 @@ export default {
         align-items: center;
         height: var(--height-50);
         font-size: 1.125rem;
+        cursor: pointer;
     }
 
     button:hover{

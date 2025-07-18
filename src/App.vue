@@ -4,16 +4,16 @@
   <h1>Treat Scout</h1>
   </header>
   
-  <p>Note: Results are user generated, so there may be inaccuracies.</p>
-  <UserForm/>
+  <p>Note: Results are user generated, so results may be limited and there may be inaccuracies.</p>
+  <UserForm @send-results="getResults"/>
 
   <nav>
-    <router-link to="/" class="nav-link">
+    <router-link :to="{name: 'snacks'}" class="nav-link">
       <span class="text">Snacks</span>
       <IceCreamCone />
     </router-link>
 
-    <router-link to="/saved" class="nav-link">
+    <router-link :to="{name: 'saved'}" class="nav-link">
       <span class="text">Saved</span>
       <Heart />
     </router-link>
@@ -26,6 +26,16 @@
   import { IceCreamCone, Heart, Compass } from 'lucide-vue-next';
 
   export default{
+    data(){
+      return{
+        results: null
+      }
+    },
+    methods:{
+      getResults(data){
+        this.results = data;
+      }
+    },
     components: {UserForm, IceCreamCone, Heart, Compass}
   }
 </script>
@@ -125,5 +135,6 @@
   nav a.router-link-exact-active {
     color: var(--fourth);
     background: var(--active);
+    text-decoration: underline;
   }
 </style>
