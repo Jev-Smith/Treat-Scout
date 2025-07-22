@@ -7,15 +7,18 @@
             </option>
         </select>
 
-        <button type="submit">
-            <span aria-hidden="true" class="material-symbols-outlined">search</span>
+        <button type="submit" id="search-button">
+            <Search/>
             <span id="search-text">Search</span>
         </button>
     </form>
 </template>
 
 <script>
+import { Search } from 'lucide-vue-next';
+
 export default {
+    components: {Search},
     data(){
         return {
             location: '',
@@ -43,6 +46,7 @@ export default {
                 }
 
                 const json = await res.json();
+                console.log(json)
                 this.$emit('send-results', json);
             } catch (err) {
                 console.error(err.message);
@@ -81,7 +85,7 @@ export default {
 
 <style>
     /* Shared styles */
-    button, select{
+    #search-button, select{
         width: 100%;
         border: 1px solid #000;
         border-radius: 5px;
@@ -101,7 +105,7 @@ export default {
         color: var(--active);
     }
 
-    button{
+    #search-button{
         display: flex;
         justify-content: center;
         align-content: center;
@@ -111,7 +115,7 @@ export default {
         cursor: pointer;
     }
 
-    button:hover{
+    #search-button:hover{
         background: var(--third);
         color: var(--fourth);
         border: 1px solid var(--fourth);
@@ -119,13 +123,5 @@ export default {
 
     #search-text{
         margin-left: 5px;
-    }
-
-    .material-symbols-outlined {
-        font-variation-settings:
-        'FILL' 0,
-        'wght' 400,
-        'GRAD' 0,
-        'opsz' 24
     }
 </style>

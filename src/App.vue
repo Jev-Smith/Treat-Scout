@@ -4,10 +4,10 @@
   <h1>Treat Scout</h1>
   </header>
   
-  <p>Note: Results are user generated, so results may be limited and there may be inaccuracies.</p>
+  <p id="note">Note: Results are user generated, so results may be limited and there may be inaccuracies.</p>
   <UserForm @send-results="getResults"/>
 
-  <nav>
+  <nav id="main-nav">
     <router-link :to="{name: 'snacks'}" class="nav-link">
       <span class="text">Snacks</span>
       <IceCreamCone />
@@ -18,7 +18,7 @@
       <Heart />
     </router-link>
   </nav>
-  <router-view/>
+  <router-view :data="results" id="test"/>
 </template>
 
 <script>
@@ -65,6 +65,7 @@
     --fourth: #FDF4F5;
     --active: #c40f64;
     --height-50: 50px;
+    --margin-2: 2rem;
   }
 
   header{
@@ -80,12 +81,12 @@
   }
 
   /* Shared styles */
-  nav, .nav-link, header{  
+  #main-nav, .nav-link, header{  
     display: flex;
   }
 
-  header, p{
-    margin-bottom: 2rem;
+  header, #note{
+    margin-bottom: var(--margin-2);
   }
   /* End of shared styles */
 
@@ -108,9 +109,11 @@
     text-shadow: 5px 5px var(--third);
   }
 
-  nav {
+  #main-nav {
     justify-content:space-evenly;
     margin-top: 2rem; 
+    position: sticky;
+    top: 10px;
   }
 
   .nav-link {
@@ -126,13 +129,14 @@
   .nav-link:hover{
     background: var(--third);
     color: var(--fourth);
+    border: 3px solid #000;
   }
 
   .text{
     margin-right: 4px;
   }
 
-  nav a.router-link-exact-active {
+  #main-nav a.router-link-exact-active {
     color: var(--fourth);
     background: var(--active);
     text-decoration: underline;
