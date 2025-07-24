@@ -8,7 +8,7 @@
         </select>
 
         <button type="submit" id="search-button">
-            <Search/>
+            <Search aria-hidden="true"/>
             <span id="search-text">Search</span>
         </button>
     </form>
@@ -46,12 +46,12 @@ export default {
                 }
 
                 let json = await res.json();
-                const filteredArr = json.products.filter(obj => Object.keys(obj).length === 4);
+                const filteredArr = json.products.filter(obj => Object.keys(obj).length === 4
+                                                        && obj.product_name.length !== 0);
                 json = {...json, products: filteredArr};
-                console.log(json)
 
                 //Remove later
-                // console.log(json)
+                console.log(json)
 
                 this.$emit('send-results', json);
             } catch (err) {

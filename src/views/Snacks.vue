@@ -10,18 +10,42 @@
                     </ul>
 
                     <nav id="page-nav">
-                        <button type="button" class="arrows">
-                            <ArrowLeft />
+                        <button type="button" class="arrows" aria-label="go to previous page">
+                            <ArrowLeft aria-hidden="true"/>
                         </button>
-                        <button type="button" class="arrows arrow-right">
-                            <ArrowRight class="arrow-svg"/>
+                        <button type="button" class="arrows arrow-right" aria-label="go to next page">
+                            <ArrowRight class="arrow-svg" aria-hidden="true"/>
                         </button>
                     </nav>
                 </header>
 
                 <section id="snacks-container">
                     <article class="snacks" v-for="snack in data.products" :key="snack.id">
-                        <p>{{ snack.product_name }}</p>
+
+                        <div>
+                            <header>
+                                <h2>{{ snack.product_name }}</h2>
+                            </header>
+
+                            <p>
+                                <Image class="para-icon" aria-hidden="true"/>
+                                <span>Images:</span>
+                                <a :href="link" target="_blank" class="img-link"
+                                    v-for="link in snack['selected_images'].front.display" :key="link"> View
+                                </a>
+                            </p>
+                            <p>
+                                <Store class="para-icon" aria-hidden="true"/>
+                                <span>Brands:</span> 
+                                <span>{{ snack.brands_tags.toString() }}</span>
+                            </p>
+
+                            <div class="like-container">
+                                <button type="button" class="like-button" aria-label="Add to saved list">
+                                    <Heart class="like-svg" aria-hidden="true"/>
+                                </button>
+                            </div>
+                        </div>
                     </article>
                 </section>
             </div>
@@ -31,18 +55,26 @@
 </template>
 
 <script>
-    import { ArrowLeft, ArrowRight } from 'lucide-vue-next';
+    import { ArrowLeft, ArrowRight, Heart, Image, Store } from 'lucide-vue-next';
 
     export default {
         props: ['data'],
-        components: {ArrowLeft, ArrowRight}
+        components: {ArrowLeft, ArrowRight, Heart, Image, Store }
     }
 </script>
 
 <style>
     /* Shared styles */
-    #counts, #counts ul {
+    #counts, #counts ul, .like-container, .snacks p {
         display: flex;
+    }
+
+    .snacks h2, .snacks p {
+        padding: 0.625rem;
+    }
+
+    .para-icon, .snacks span{
+        margin-right: 6px;
     }
     /* End of shared styles */
 
@@ -50,12 +82,22 @@
         margin-top: var(--margin-2);
     }
 
-    .prompt {
-        text-align: center;
-    }
-
     ul{
         list-style-type: none;
+    }
+
+    article{
+        border-radius: 10px;
+    }
+
+    .snacks h2{
+        font-size: 1.125rem;
+        border-radius: 10px 10px 0 0;
+        background: #ff82bc;
+    }
+
+    .prompt {
+        text-align: center;
     }
 
     #counts {
@@ -63,7 +105,8 @@
         position: sticky;
         top: 80px;
         z-index: 1;
-        background: var(--fourth);
+        background: var(--active);
+        color: var(--fourth);
         border: 1px solid #000;
         border-radius: 30px;
         padding: .5rem 1rem;
@@ -99,5 +142,36 @@
 
     .snacks{
         background: var(--fourth);
+        box-shadow: 2px 3px 5px #706f6f;
+    }
+
+    .snacks p{
+        align-items: end;
+    }
+
+    .img-link{
+        margin-right: 4px;
+        color: #03748d;
+        text-decoration: none;
+    }
+
+    .img-link:hover{
+        text-decoration: underline;
+        color: var(--active);
+    }
+
+    .like-container{
+        padding: 0 0.625rem 0 0.625rem;
+        justify-content: end;
+    }
+
+    .like-button{
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+
+    .like-svg:hover{
+        fill: var(--active);
     }
 </style>

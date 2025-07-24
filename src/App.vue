@@ -1,5 +1,5 @@
 <template>
-  <header>
+  <header id="title-header">
   <Compass :size="50" aria-hidden="true" id="compass"/>
   <h1>Treat Scout</h1>
   </header>
@@ -10,12 +10,12 @@
   <nav id="main-nav">
     <router-link :to="{name: 'snacks'}" class="nav-link">
       <span class="text">Snacks</span>
-      <IceCreamCone />
+      <IceCreamCone aria-hidden="true"/>
     </router-link>
 
     <router-link :to="{name: 'saved'}" class="nav-link">
       <span class="text">Saved</span>
-      <Heart />
+      <Heart aria-hidden="true"/>
     </router-link>
   </nav>
   <router-view :data="results"/>
@@ -68,7 +68,7 @@
     --margin-2: 2rem;
   }
 
-  header{
+  #title-header{
     justify-content: center;
     margin-top: 1rem;
   }
@@ -81,11 +81,11 @@
   }
 
   /* Shared styles */
-  #main-nav, .nav-link, header{  
+  #main-nav, .nav-link, #title-header{  
     display: flex;
   }
 
-  header, #note{
+  #title-header, #note{
     margin-bottom: var(--margin-2);
   }
   /* End of shared styles */
@@ -100,6 +100,7 @@
     max-width: 900px;
     width: 95%;
     margin: 0 auto;
+    margin-bottom: 20px;
   }
 
   h1{
