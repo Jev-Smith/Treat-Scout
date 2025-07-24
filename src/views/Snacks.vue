@@ -27,13 +27,15 @@
                                 <h2>{{ snack.product_name }}</h2>
                             </header>
 
-                            <p>
+                            <div class="image-div">
                                 <Image class="para-icon" aria-hidden="true"/>
                                 <span>Images:</span>
-                                <a :href="link" target="_blank" class="img-link"
-                                    v-for="link in snack['selected_images'].front.display" :key="link"> View
-                                </a>
-                            </p>
+                                <div>
+                                    <a :href="link" target="_blank" class="img-link"
+                                        v-for="link in snack['selected_images'].front.display" :key="link"> View
+                                    </a>
+                                </div>
+                            </div>
                             <p>
                                 <Store class="para-icon" aria-hidden="true"/>
                                 <span>Brands:</span> 
@@ -65,11 +67,11 @@
 
 <style>
     /* Shared styles */
-    #counts, #counts ul, .like-container, .snacks p {
+    #counts, #counts ul, .like-container, .snacks p, .image-div {
         display: flex;
     }
 
-    .snacks h2, .snacks p {
+    .snacks h2, .snacks p, .image-div {
         padding: 0.625rem;
     }
 
@@ -145,8 +147,8 @@
         box-shadow: 2px 3px 5px #706f6f;
     }
 
-    .snacks p{
-        align-items: end;
+    .snacks p, .image-div{
+        align-items: center;
     }
 
     .img-link{
