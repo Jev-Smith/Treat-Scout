@@ -18,7 +18,7 @@
       <Heart />
     </router-link>
   </nav>
-  <router-view :data="results" id="test"/>
+  <router-view :data="results"/>
 </template>
 
 <script>
@@ -124,12 +124,12 @@
     border-radius: 30px;
     justify-content: center;
     align-items: center;
+    border: 1px solid #000;
   }
 
   .nav-link:hover{
     background: var(--third);
     color: var(--fourth);
-    border: 3px solid #000;
   }
 
   .text{

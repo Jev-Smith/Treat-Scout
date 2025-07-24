@@ -23,7 +23,7 @@ export default {
         return {
             location: '',
             locationList: null, 
-            searchParams: 'categories_tags_en=snacks&fields=brands_tags,product_name,selected_images&page=1&page_size=24',
+            searchParams: 'categories_tags_en=snacks&fields=brands_tags,product_name,selected_images,id&page=1&page_size=24',
         }
     },
     methods:{
@@ -45,8 +45,14 @@ export default {
                     throw new Error('Could not fetch results');
                 }
 
-                const json = await res.json();
+                let json = await res.json();
+                const filteredArr = json.products.filter(obj => Object.keys(obj).length === 4);
+                json = {...json, products: filteredArr};
                 console.log(json)
+
+                //Remove later
+                // console.log(json)
+
                 this.$emit('send-results', json);
             } catch (err) {
                 console.error(err.message);

@@ -10,19 +10,20 @@
                     </ul>
 
                     <nav id="page-nav">
-                        <button type="button" class="arrows arrow-left">
-                            <MousePointer2 class="arrow-svg"/>
+                        <button type="button" class="arrows">
+                            <ArrowLeft />
                         </button>
                         <button type="button" class="arrows arrow-right">
-                            <MousePointer2 class="arrow-svg"/>
+                            <ArrowRight class="arrow-svg"/>
                         </button>
                     </nav>
                 </header>
 
-                <article>
-                    <h1>Snacks</h1>
-                    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-                </article>
+                <section id="snacks-container">
+                    <article class="snacks" v-for="snack in data.products" :key="snack.id">
+                        <p>{{ snack.product_name }}</p>
+                    </article>
+                </section>
             </div>
         </section>
         <p class="prompt" v-else>Choose a location and search!</p>
@@ -30,11 +31,11 @@
 </template>
 
 <script>
-    import { MousePointer2 } from 'lucide-vue-next';
+    import { ArrowLeft, ArrowRight } from 'lucide-vue-next';
 
     export default {
         props: ['data'],
-        components: {MousePointer2}
+        components: {ArrowLeft, ArrowRight}
     }
 </script>
 
@@ -76,12 +77,7 @@
     }
 
     .arrow-right{
-        transform: rotate(130deg);
         margin-left: 5px;
-    }
-
-    .arrow-left{
-        transform: rotate(-50deg);
     }
 
     .arrows{
@@ -93,9 +89,15 @@
     .arrows:hover{
         background: var(--third);
         cursor: pointer;
+        color: var(--fourth);
     }
 
-    .arrow-svg{
-        fill: var(--fourth);
+    #snacks-container{
+        display: grid;
+        row-gap: 20px;
+    }
+
+    .snacks{
+        background: var(--fourth);
     }
 </style>
