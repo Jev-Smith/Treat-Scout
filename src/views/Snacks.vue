@@ -1,26 +1,26 @@
 <template>
     <main>
-        <section v-if="data">
-            <p class="prompt" v-if="data.count === 0">No snacks found :(</p>
+        <section v-if="results">
+            <p class="prompt" v-if="results.count === 0">No snacks found :(</p>
             <div v-else>
                 <header id="counts">
                     <ul>
-                        <li>Results: {{ data.count }}</li>
-                        <li>Page: {{ data.page }} of {{ data.page_count }}</li>
+                        <li>Results: {{ results.count }}</li>
+                        <li>Page: {{ results.page }} of {{ totalPages }}</li>
                     </ul>
 
                     <nav id="page-nav">
-                        <button type="button" class="arrows" aria-label="go to previous page">
+                        <button @click="getPreviousPage" type="button" class="arrows" aria-label="go to previous page">
                             <ArrowLeft aria-hidden="true"/>
                         </button>
-                        <button type="button" class="arrows arrow-right" aria-label="go to next page">
+                        <button @click="getNextPage" type="button" class="arrows arrow-right" aria-label="go to next page">
                             <ArrowRight class="arrow-svg" aria-hidden="true"/>
                         </button>
                     </nav>
                 </header>
 
                 <section id="snacks-container">
-                    <article class="snacks" v-for="snack in data.products" :key="snack.id">
+                    <article class="snacks" v-for="snack in results.products" :key="snack.id">
 
                         <div>
                             <header>
@@ -39,12 +39,12 @@
                             <p>
                                 <Store class="para-icon" aria-hidden="true"/>
                                 <span>Brands:</span> 
-                                <span>{{ snack.brands_tags.toString() }}</span>
+                                <span class="brands">{{ snack.brands_tags.toString() }}</span>
                             </p>
 
-                            <div class="like-container">
-                                <button type="button" class="like-button" aria-label="Add to saved list">
-                                    <Heart class="like-svg" aria-hidden="true"/>
+                            <div class="saved-container">
+                                <button title="save" type="button" class="saved-button" aria-label="Add to saved list">
+                                    <Heart class="saved-svg" aria-hidden="true"/>
                                 </button>
                             </div>
                         </div>
@@ -58,16 +58,57 @@
 
 <script>
     import { ArrowLeft, ArrowRight, Heart, Image, Store } from 'lucide-vue-next';
+    import getResults from '../api/handle-form';
+
+    const fetchPage = getResults;
 
     export default {
-        props: ['data'],
-        components: {ArrowLeft, ArrowRight, Heart, Image, Store }
+        props: ['results', 'location', 'totalPages'],
+        components: {ArrowLeft, ArrowRight, Heart, Image, Store },
+        data(){
+            return{
+                nextPageNum: 2,
+                previousPageNum: null
+            }
+        },
+        methods:{
+            async getNextPage(){
+                if(this.totalPages === 1){
+                    return;
+                }
+                else if(this.results.page < this.totalPages){
+
+                    fetchPage(this.location, this.nextPageNum)
+                    .then(res => {
+                        this.nextPageNum++;
+                        this.$emit('update', res)
+                    }).catch(err => console.error(err))
+                }
+            },
+            async getPreviousPage(){
+                if(this.totalPages === 1){
+                    return;
+                }
+                else if(this.results.page === 1){
+                    return;
+                }
+                else{
+                    this.previousPageNum = this.results.page - 1;
+                    
+                    fetchPage(this.location, this.previousPageNum)
+                    .then(res => {
+                        this.nextPageNum = res.data.page + 1;
+                        this.$emit('update', res)
+                    }).catch(err => console.error(err))
+                }
+            }
+        }
     }
 </script>
 
 <style>
     /* Shared styles */
-    #counts, #counts ul, .like-container, .snacks p, .image-div {
+    #counts, #counts ul, .saved-container, .snacks p, .image-div {
         display: flex;
     }
 
@@ -78,6 +119,11 @@
     .para-icon, .snacks span{
         margin-right: 6px;
     }
+
+    .brands, .img-link{
+        color:#03748d;
+    }
+
     /* End of shared styles */
 
     main {
@@ -153,7 +199,6 @@
 
     .img-link{
         margin-right: 4px;
-        color: #03748d;
         text-decoration: none;
     }
 
@@ -162,18 +207,18 @@
         color: var(--active);
     }
 
-    .like-container{
+    .saved-container{
         padding: 0 0.625rem 0 0.625rem;
         justify-content: end;
     }
 
-    .like-button{
+    .saved-button{
         background: none;
         border: none;
         cursor: pointer;
     }
 
-    .like-svg:hover{
+    .saved-svg:hover{
         fill: var(--active);
     }
 </style>

@@ -1,5 +1,8 @@
 <template>
-    <form @submit.prevent="handleForm">
+    <form @submit.prevent="handleForm(location)
+                            .then(data => this.$emit('send-results', data))
+                            .catch(err => console.error(err))">
+
         <label for="locations">Choose a location:</label>
         <select v-model="location" id="locations">
             <option :value="loc" v-for="loc in locationList" :key="loc.index">
@@ -16,49 +19,18 @@
 
 <script>
 import { Search } from 'lucide-vue-next';
+import getResults from '../api/handle-form';
 
 export default {
     components: {Search},
     data(){
         return {
             location: '',
-            locationList: null, 
-            searchParams: 'categories_tags_en=snacks&fields=brands_tags,product_name,selected_images,id&page=1&page_size=24',
+            locationList: null,
+            handleForm: getResults
         }
     },
-    methods:{
-        async handleForm(){
-            if(!this.location){
-                return;
-            }
-
-            const params = new URLSearchParams();
-            params.append("countries_tags_en", this.location);
-
-            try {
-                const url = `https://world.openfoodfacts.net/api/v2/search?${this.searchParams}&${params}`;
-
-                const res = await fetch(`${url}`, {method:'GET',  
-                                    headers: {'Authorization': 'Basic ' + btoa('off:off')}});
-
-                if(!res.ok){
-                    throw new Error('Could not fetch results');
-                }
-
-                let json = await res.json();
-                const filteredArr = json.products.filter(obj => Object.keys(obj).length === 4
-                                                        && obj.product_name.length !== 0);
-                json = {...json, products: filteredArr};
-
-                //Remove later
-                console.log(json)
-
-                this.$emit('send-results', json);
-            } catch (err) {
-                console.error(err.message);
-            }
-        }
-    },
+    methods:{},
     mounted(){
         const getLocations = async () => {
 

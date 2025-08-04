@@ -18,7 +18,7 @@
       <Heart aria-hidden="true"/>
     </router-link>
   </nav>
-  <router-view :data="results"/>
+  <router-view :results="results" :location="location" :totalPages="totalPages" @update="updateResults"/>
 </template>
 
 <script>
@@ -28,11 +28,18 @@
   export default{
     data(){
       return{
-        results: null
+        results: null,
+        location: null,
+        totalPages: null
       }
     },
     methods:{
-      getResults(data){
+      getResults({data, selectedLocation}){
+        this.results = data;
+        this.location = selectedLocation;
+        this.totalPages = data.totalPages;
+      }, 
+      updateResults({data}){
         this.results = data;
       }
     },
