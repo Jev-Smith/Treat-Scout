@@ -4,7 +4,9 @@
   <h1>Treat Scout</h1>
   </header>
   
-  <p id="note">Note: Results are user generated, so results may be limited and there may be inaccuracies.</p>
+  <p id="note">
+    Note: Results are user generated, so results may be limited and there may be inaccuracies.
+  </p>
   <UserForm @send-results="getResults"/>
 
   <nav id="main-nav">
@@ -18,7 +20,10 @@
       <Heart aria-hidden="true"/>
     </router-link>
   </nav>
-  <router-view :results="results" :location="location" :totalPages="totalPages" @update="updateResults"/>
+  <router-view :results="snackItems" 
+              :location="location" 
+              :totalPages="totalPages" 
+              @update="updateResults"/>
 </template>
 
 <script>
@@ -28,19 +33,24 @@
   export default{
     data(){
       return{
-        results: null,
+        snackItems: null,
         location: null,
         totalPages: null
       }
     },
     methods:{
       getResults({data, selectedLocation}){
-        this.results = data;
+        this.snackItems = data;
         this.location = selectedLocation;
         this.totalPages = data.totalPages;
       }, 
       updateResults({data}){
-        this.results = data;
+        this.snackItems = data;
+      }
+    },
+    mounted(){
+      if(localStorage.getItem('saved') === null){
+        localStorage.setItem('saved', null);
       }
     },
     components: {UserForm, IceCreamCone, Heart, Compass}

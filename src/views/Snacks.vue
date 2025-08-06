@@ -5,51 +5,27 @@
             <div v-else>
                 <header id="counts">
                     <ul>
-                        <li>Results: {{ results.count }}</li>
+                        <li>Results: {{ results.products.length }}</li>
                         <li>Page: {{ results.page }} of {{ totalPages }}</li>
                     </ul>
 
                     <nav id="page-nav">
-                        <button @click="getPreviousPage" type="button" class="arrows" aria-label="go to previous page">
+                        <button @click="getPreviousPage" 
+                                type="button" class="arrows" 
+                                aria-label="go to previous page">
                             <ArrowLeft aria-hidden="true"/>
                         </button>
-                        <button @click="getNextPage" type="button" class="arrows arrow-right" aria-label="go to next page">
+
+                        <button @click="getNextPage" 
+                                type="button" 
+                                class="arrows arrow-right" 
+                                aria-label="go to next page">
                             <ArrowRight class="arrow-svg" aria-hidden="true"/>
                         </button>
                     </nav>
                 </header>
 
-                <section id="snacks-container">
-                    <article class="snacks" v-for="snack in results.products" :key="snack.id">
-
-                        <div>
-                            <header>
-                                <h2>{{ snack.product_name }}</h2>
-                            </header>
-
-                            <div class="image-div">
-                                <Image class="para-icon" aria-hidden="true"/>
-                                <span>Images:</span>
-                                <div>
-                                    <a :href="link" target="_blank" class="img-link"
-                                        v-for="link in snack['selected_images'].front.display" :key="link"> View
-                                    </a>
-                                </div>
-                            </div>
-                            <p>
-                                <Store class="para-icon" aria-hidden="true"/>
-                                <span>Brands:</span> 
-                                <span class="brands">{{ snack.brands_tags.toString() }}</span>
-                            </p>
-
-                            <div class="saved-container">
-                                <button title="save" type="button" class="saved-button" aria-label="Add to saved list">
-                                    <Heart class="saved-svg" aria-hidden="true"/>
-                                </button>
-                            </div>
-                        </div>
-                    </article>
-                </section>
+                <SnacksList :results="results"/>
             </div>
         </section>
         <p class="prompt" v-else>Choose a location and search!</p>
@@ -57,14 +33,15 @@
 </template>
 
 <script>
-    import { ArrowLeft, ArrowRight, Heart, Image, Store } from 'lucide-vue-next';
+    import { ArrowLeft, ArrowRight } from 'lucide-vue-next';
     import getResults from '../api/handle-form';
+    import SnacksList from '../components/SnacksList.vue';
 
     const fetchPage = getResults;
 
     export default {
         props: ['results', 'location', 'totalPages'],
-        components: {ArrowLeft, ArrowRight, Heart, Image, Store },
+        components: {ArrowLeft, ArrowRight, SnacksList},
         data(){
             return{
                 nextPageNum: 2,
@@ -81,7 +58,7 @@
                     fetchPage(this.location, this.nextPageNum)
                     .then(res => {
                         this.nextPageNum++;
-                        this.$emit('update', res)
+                        this.$emit('update', res);
                     }).catch(err => console.error(err))
                 }
             },
