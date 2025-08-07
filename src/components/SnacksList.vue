@@ -28,7 +28,8 @@
                             class="saved-button" 
                             aria-label="Add to saved list"
                             @click="saveFavouriteOrRemove(snack.id)">
-                        <Heart class="saved-svg" aria-hidden="true"/>
+                        <Heart class="heart-svg" :class="{hide: hideSave}" aria-hidden="true"/>
+                        <HeartCrack class="heart-svg" :class="{hide: hideRemove}" aria-hidden="true"/>
                     </button>
                 </div>
             </div>
@@ -37,14 +38,16 @@
 </template>
 
 <script>
-    import { Heart, Image, Store } from 'lucide-vue-next';
+    import { Heart, Image, Store, HeartCrack} from 'lucide-vue-next';
 
     export default {
-        props: ['results', 'isRemove', 'title'],
-        components: {Heart, Image, Store },
+        props: ['results', 'isRemove', 'title', 'isHidden'],
+        components: {Heart, Image, Store, HeartCrack },
         data(){
             return {
-                saveFavouriteList: []
+                saveFavouriteList: [],
+                hideSave: this.isHidden[0],
+                hideRemove: this.isHidden[1]
             }
         },  
         methods:{
@@ -81,5 +84,82 @@
 </script>
 
 <style>
+     /* Shared styles */
+    .saved-container, .snacks p, .image-div {
+        display: flex;
+    }
 
+    .snacks h2, .snacks p, .image-div {
+        padding: 0.625rem;
+    }
+
+    .para-icon, .snacks span{
+        margin-right: 6px;
+    }
+
+    .brands, .img-link{
+        color:#03748d;
+    }
+    /* End of shared styles */
+
+    main {
+        margin-top: var(--margin-2);
+    }
+
+    ul{
+        list-style-type: none;
+    }
+
+    article{
+        border-radius: 10px;
+    }
+
+    .snacks h2{
+        font-size: 1.125rem;
+        border-radius: 10px 10px 0 0;
+        background: #ff82bc;
+    }
+
+    #snacks-container{
+        display: grid;
+        row-gap: 20px;
+    }
+
+    .snacks{
+        background: var(--fourth);
+        box-shadow: 2px 3px 5px #706f6f;
+    }
+
+    .snacks p, .image-div{
+        align-items: center;
+    }
+
+    .img-link{
+        margin-right: 4px;
+        text-decoration: none;
+    }
+
+    .img-link:hover{
+        text-decoration: underline;
+        color: var(--active);
+    }
+
+    .saved-container{
+        padding: 0 0.625rem 0 0.625rem;
+        justify-content: end;
+    }
+
+    .saved-button{
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+
+    .heart-svg:hover{
+        fill: var(--active);
+    }
+
+    .hide{
+        display: none;
+    }
 </style>

@@ -25,7 +25,10 @@
                     </nav>
                 </header>
 
-                <SnacksList :results="results" :isRemove="false" title="save"/>
+                <SnacksList :results="results" 
+                            :isRemove="false" 
+                            title="save"
+                            :isHidden="[false, true]"/>
             </div>
         </section>
         <p class="prompt" v-else>Choose a location and search!</p>
@@ -85,41 +88,10 @@
 
 <style>
     /* Shared styles */
-    #counts, #counts ul, .saved-container, .snacks p, .image-div {
+    #counts, #counts ul {
         display: flex;
     }
-
-    .snacks h2, .snacks p, .image-div {
-        padding: 0.625rem;
-    }
-
-    .para-icon, .snacks span{
-        margin-right: 6px;
-    }
-
-    .brands, .img-link{
-        color:#03748d;
-    }
-
     /* End of shared styles */
-
-    main {
-        margin-top: var(--margin-2);
-    }
-
-    ul{
-        list-style-type: none;
-    }
-
-    article{
-        border-radius: 10px;
-    }
-
-    .snacks h2{
-        font-size: 1.125rem;
-        border-radius: 10px 10px 0 0;
-        background: #ff82bc;
-    }
 
     .prompt {
         text-align: center;
@@ -158,44 +130,5 @@
         background: var(--third);
         cursor: pointer;
         color: var(--fourth);
-    }
-
-    #snacks-container{
-        display: grid;
-        row-gap: 20px;
-    }
-
-    .snacks{
-        background: var(--fourth);
-        box-shadow: 2px 3px 5px #706f6f;
-    }
-
-    .snacks p, .image-div{
-        align-items: center;
-    }
-
-    .img-link{
-        margin-right: 4px;
-        text-decoration: none;
-    }
-
-    .img-link:hover{
-        text-decoration: underline;
-        color: var(--active);
-    }
-
-    .saved-container{
-        padding: 0 0.625rem 0 0.625rem;
-        justify-content: end;
-    }
-
-    .saved-button{
-        background: none;
-        border: none;
-        cursor: pointer;
-    }
-
-    .saved-svg:hover{
-        fill: var(--active);
     }
 </style>

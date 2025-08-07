@@ -4,7 +4,8 @@
             <SnacksList :results="savedList" 
                         :isRemove="true" 
                         title="remove"
-                        @localStorageUpdate="updateSavedList"/>
+                        @localStorageUpdate="updateSavedList"
+                        :isHidden="[true, false]"/>
         </div>
         <p class="prompt" v-else>Save some snacks!</p>
     </section>
