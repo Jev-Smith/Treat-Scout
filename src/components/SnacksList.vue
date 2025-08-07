@@ -23,11 +23,11 @@
                 </p>
 
                 <div class="saved-container">
-                    <button title="save" 
+                    <button :title="this.title"
                             type="button" 
                             class="saved-button" 
                             aria-label="Add to saved list"
-                            @click="saveFavourite(snack.id)">
+                            @click="saveFavouriteOrRemove(snack.id)">
                         <Heart class="saved-svg" aria-hidden="true"/>
                     </button>
                 </div>
@@ -40,7 +40,7 @@
     import { Heart, Image, Store } from 'lucide-vue-next';
 
     export default {
-        props: ['results'],
+        props: ['results', 'isRemove', 'title'],
         components: {Heart, Image, Store },
         data(){
             return {
@@ -48,10 +48,33 @@
             }
         },  
         methods:{
-            saveFavourite(id){
-                let target = this.results.products.filter(obj => obj.id === this.$refs[id][0].id)[0]
-                this.saveFavouriteList.push({...target, saved: true});
-                localStorage.setItem('saved', JSON.stringify(this.saveFavouriteList));
+            saveFavouriteOrRemove(id){
+                let target;
+                let filteredList;
+
+                if(this.isRemove){
+                    filteredList = JSON.parse(localStorage.getItem('saved')).filter(obj => {
+                        return obj.id !== this.$refs[id][0].id;
+                    });
+                    
+                    localStorage.setItem('saved', JSON.stringify(filteredList));
+                    const updatedStorage = JSON.parse(localStorage.getItem('saved'));
+                    
+                    this.$emit('localStorageUpdate', updatedStorage);
+
+                    if(JSON.parse(localStorage.getItem('saved')).length === 0){
+                        localStorage.setItem('saved', null);
+                    }
+                }else{
+                    target = this.results.products.filter(obj => obj.id === this.$refs[id][0].id)[0]
+                    this.saveFavouriteList.push({...target, saved: true});
+                    localStorage.setItem('saved', JSON.stringify(this.saveFavouriteList));
+                }
+            }
+        },
+        mounted(){
+            if(JSON.parse(localStorage.getItem('saved')) !== null){
+                this.saveFavouriteList = JSON.parse(localStorage.getItem('saved'));
             }
         }
     }

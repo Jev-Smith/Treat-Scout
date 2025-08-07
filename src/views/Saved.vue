@@ -1,7 +1,10 @@
 <template>
     <section id="saved-section">
         <div v-if="this.storage !== null">
-            <SnacksList :results="savedList"/>
+            <SnacksList :results="savedList" 
+                        :isRemove="true" 
+                        title="remove"
+                        @localStorageUpdate="updateSavedList"/>
         </div>
         <p class="prompt" v-else>Save some snacks!</p>
     </section>
@@ -16,6 +19,11 @@
             return{
                 savedList: {},
                 storage: JSON.parse(localStorage.getItem('saved'))
+            }
+        },
+        methods: {
+            updateSavedList(data){
+                this.savedList = {products: data};
             }
         },
         mounted(){

@@ -49,7 +49,7 @@
       }
     },
     mounted(){
-      if(localStorage.getItem('saved') === null){
+      if(JSON.parse(localStorage.getItem('saved')) === null){
         localStorage.setItem('saved', null);
       }
     },

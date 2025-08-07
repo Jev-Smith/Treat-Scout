@@ -25,7 +25,7 @@
                     </nav>
                 </header>
 
-                <SnacksList :results="results"/>
+                <SnacksList :results="results" :isRemove="false" title="save"/>
             </div>
         </section>
         <p class="prompt" v-else>Choose a location and search!</p>
