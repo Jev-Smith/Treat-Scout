@@ -18,3 +18,8 @@ Find snacks from around the world using the Open Food Facts API.
 
 ## Running the project
 After downloading the project onto your local machine, run `npm install`. Then run `npm run serve` and click on the "Local" link in your terminal.
+
+## Preview
+
+https://github.com/user-attachments/assets/8172f179-8345-43b1-afd0-944e93899e29
+
