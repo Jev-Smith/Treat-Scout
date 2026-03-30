@@ -1,19 +1,16 @@
-# treat-scout
+# Treat Scout
 
-## Project setup
-```
-npm install
-```
+Find snacks from around the world using the Open Food Facts API. 
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## Technologies
+- Vue.js
+- CSS
+- JavaScript
+- HTML
 
-### Compiles and minifies for production
-```
-npm run build
-```
+## Features
+- Search for snacks based on country
+- Save the snacks you are interested in
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Running the project
+After downloading the project onto your local machine, run `npm install`. Then run `npm run serve` and click on the "Local" link in your terminal.
